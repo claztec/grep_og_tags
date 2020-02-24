@@ -1,3 +1,4 @@
+import os
 import time
 
 from bs4 import BeautifulSoup
@@ -13,7 +14,8 @@ def __load_page(url):
     options.add_argument('disable-gpu')
 
     try:
-        driver = webdriver.Chrome('./chromedriver', chrome_options=options)
+        filename = os.path.dirname(__file__) + '/chromedriver'
+        driver = webdriver.Chrome(filename, chrome_options=options)
         driver.get(url)
         time.sleep(1)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -44,19 +46,18 @@ def _get_title(soup):
         return title
 
 
-def get_meta(url):
+def find_title(url):
     soup = __load_page(url)
     title = _get_title(soup)
-    return (url, title)
+    _print_result(title=title, url=url)
 
 
-def _print_result(result):
-    print("[%s](%s){:target=\"_blank\"}" % (result[1], result[0]))
+def _print_result(title, url):
+    print("[%s](%s){:target=\"_blank\"}" % (title, url))
 
 
 
 if __name__ == '__main__':
-    # url = sys.argv[0]
     url = 'https://cnpnote.tistory.com/entry/PYTHON-%EA%B0%80%EC%A0%B8-%EC%98%A4%EA%B8%B0-%EC%98%A4%EB%A5%98-No-module-named-does-exist'
-    result = get_meta(url)
-    _print_result(result)
+    find_title(url)
+

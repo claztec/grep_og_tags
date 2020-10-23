@@ -34,6 +34,12 @@ def _get_title(soup):
 
     if title == None:
         try:
+            title = soup.find('title').text
+        except:
+            title = None
+
+    if title == None:
+        try:
             title = soup.find('h1').text
         except:
             title = None
@@ -48,6 +54,7 @@ def _get_title(soup):
 
 def find_title(url):
     soup = __load_page(url)
+    print(soup)
     title = _get_title(soup)
     _print_result(title=title, url=url)
 
@@ -58,6 +65,6 @@ def _print_result(title, url):
 
 
 if __name__ == '__main__':
-    url = 'https://cnpnote.tistory.com/entry/PYTHON-%EA%B0%80%EC%A0%B8-%EC%98%A4%EA%B8%B0-%EC%98%A4%EB%A5%98-No-module-named-does-exist'
+    url = 'https://doitddo.tistory.com/84?category=855312'
     find_title(url)
 

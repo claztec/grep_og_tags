@@ -54,7 +54,6 @@ def _get_title(soup):
 
 def find_title(url):
     soup = __load_page(url)
-    print(soup)
     title = _get_title(soup)
     _print_result(title=title, url=url)
 
